@@ -1,4 +1,4 @@
-package menu;
+package commands;
 
 public class ExitCommand implements MenuCommand{
     @Override

@@ -1,6 +1,9 @@
 package menu;
 
 
+import commands.ExitCommand;
+import commands.MenuCommand;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -12,37 +15,50 @@ public class Menu {
     private List<Menu> options;
     private Menu parent;
 
-    public Menu(String header, String title, List<Menu> options, Menu parent, MenuCommand command) {
-        this.header = header == null ? "" : header;
-        this.title = title == null ? "" : title;
-        this.parent = parent;
-        this.command = command;
+    public Menu(String header, String title, List<Menu> options){
+        this.header = header;
+        this.title = title;
+        this.parent = null;
+        this.command = null;
         if (options == null) {
             this.options = new ArrayList<>();
         } else {
             this.options = options;
         }
-        if (this.parent != null) {
+        this.options.add(this.generateExitOption());
+    }
+
+    public Menu(String title, MenuCommand command){
+        this.header = null;
+        this.title = title;
+        this.options = new ArrayList<>();
+        this.command = command;
+        this.parent = parent;
+    }
+
+    public Menu(String header, String title, List<Menu> options, Menu parent){
+        this.header = header;
+        this.title = title;
+        this.parent = parent;
+        this.command = null;
+        if (options == null) {
+            this.options = new ArrayList<>();
+        } else {
+            this.options = options;
+        }
+        if(parent != null){
             this.options.add(this.generateParentMenuOption());
         }
         this.options.add(this.generateExitOption());
     }
 
-    private Menu(String title, MenuCommand command){
-        this.header = "";
-        this.title = title;
-        this.parent = null;
-        this.options = new ArrayList<>();
-        this.command = command;
-    }
-
     private String generateMenu() {
         String result = "";
-        if (header != "") {
+        if (header != null && header != "") {
             result += header + "\n";
             result += "------------------------------------------\n";
         }
-        if (title != "") {
+        if (title != null && title != "") {
             result = title + "\n";
             result += "===========================================\n";
         }
@@ -65,7 +81,7 @@ public class Menu {
     }
 
     private Menu generateParentMenuOption() {
-        return new Menu(parent.header, "Return to " + parent.title, parent.options, parent.parent, parent.command);
+        return new Menu(parent.header, "Return to " + parent.title, parent.options, parent.parent);
     }
 
     private Menu getUserSelectedMenu(){
@@ -92,7 +108,6 @@ public class Menu {
     public void runCommand() {
         if (this.command != null) {
             this.command.execute();
-            this.runCommand();
         } else {
             this.printMenu();
             this.getUserSelectedMenu().runCommand();
