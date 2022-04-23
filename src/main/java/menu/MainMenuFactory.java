@@ -7,16 +7,16 @@ import commands.SearchCommand;
 public class MainMenuFactory {
     public static Menu createMainMenu() {
         Menu menu = new Menu();
-        menu.addHeader("App name")
-                .addTitle("Read Files")
+        menu.addTitle("Main Menu")
+                .addHeader("App Name")
                 .addMenuOption(createReadOption())
-                .addMenuOption(createEditAndSearchOption(menu))
+                .addMenuOption(createEditAndSearchOptionMenu(menu))
                 .addExitOption();
         return menu;
     }
 
 
-    private static Menu createEditAndSearchOption(Menu parent) {
+    private static Menu createEditAndSearchOptionMenu(Menu parent) {
         return new Menu()
                 .addTitle("Edit and Search Submenu")
                 .addMenuOption(createDeleteOption())

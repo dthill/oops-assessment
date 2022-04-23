@@ -26,22 +26,25 @@ public class Menu {
         return this;
     }
 
-    public Menu addCommand(MenuCommand command){
+    public Menu addCommand(MenuCommand command) {
         this.command = command;
         return this;
     }
 
-    public Menu addMenuOption(Menu option){
-        if(this.options == null){
+    public Menu addMenuOption(Menu option) {
+        if (this.options == null) {
             this.options = new ArrayList<>();
         }
         this.options.add(option);
         return this;
     }
 
-    public Menu addParent(Menu parent){
+    public Menu addParent(Menu parent) {
         this.parent = parent;
-        return this.addMenuOption(new Menu().addTitle("parent menu").addCommand(new ParentCommand(this.parent)));
+        return this.addMenuOption(
+                new Menu()
+                        .addTitle("parent menu")
+                        .addCommand(new ParentCommand(this.parent)));
     }
 
     public Menu addExitOption() {
@@ -52,12 +55,12 @@ public class Menu {
 
     private String generateMenuText() {
         String result = "";
-        if (header != null && header != "") {
+        if (header != null && !header.equals("")) {
             result += header + "\n";
-            result += "------------------------------------------\n";
+            result += "-------------------------------------------\n";
         }
-        if (title != null && title != "") {
-            result = title + "\n";
+        if (title != null && !title.equals("")) {
+            result += title + "\n";
             result += "===========================================\n";
         }
         for (int i = 0; i < options.size(); i++) {
@@ -103,6 +106,4 @@ public class Menu {
             this.getUserSelectedMenu().runCommand();
         }
     }
-
-
 }
