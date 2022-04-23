@@ -10,13 +10,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
-    private String header;
+    private MenuHeader header;
     private String title;
     private MenuCommand command;
     private List<Menu> options;
     private Menu parent;
 
-    public Menu addHeader(String header) {
+    public Menu addHeader(MenuHeader header) {
         this.header = header;
         return this;
     }
@@ -55,13 +55,13 @@ public class Menu {
 
     private String generateMenuText() {
         String result = "";
-        if (header != null && !header.equals("")) {
-            result += header + "\n";
-            result += "-------------------------------------------\n";
+        if (header != null) {
+            result += header.generateHeader();
+            result += "------------------------------------------------\n";
         }
         if (title != null && !title.equals("")) {
             result += title + "\n";
-            result += "===========================================\n";
+            result += "================================================\n";
         }
         for (int i = 0; i < options.size(); i++) {
             result += this.generateMenuOptionText(i);

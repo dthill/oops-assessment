@@ -8,7 +8,12 @@ public class MainMenuFactory {
     public static Menu createMainMenu() {
         Menu menu = new Menu();
         menu.addTitle("Main Menu")
-                .addHeader("App Name")
+                .addHeader(
+                        new MenuHeader(
+                                "Company Lockers App",
+                                "Damien Thill",
+                                "developer@email.com"
+                        ))
                 .addMenuOption(createReadOption())
                 .addMenuOption(createEditAndSearchOptionMenu(menu))
                 .addExitOption();
