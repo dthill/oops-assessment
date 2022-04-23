@@ -8,31 +8,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainMenuFactory {
-    public static Menu createMainMenu(){
-        List<Menu> menuOptions = createMainMenuOptions();
-        return new Menu("App Title...", "Main Menu", menuOptions);
+    public static Menu createMainMenu() {
+        Menu menu = new Menu();
+        menu.addHeader("App name")
+                .addTitle("Read Files")
+                .addMenuOption(createReadOption())
+                .addParent(menu)
+                .addExitOption();
+        return menu;
     }
 
-    private static List<Menu> createMainMenuOptions(){
-        List<Menu> menuOptions = new ArrayList<>();
-        menuOptions.add(createReadOption());
-        return menuOptions;
+
+    private static Menu createEditAndSearchOption() {
+        return null;
     }
 
-    private static  Menu createEditAndSearchOption(){
-       return null;
+    private static Menu createReadOption() {
+        return new Menu().addCommand(new ReadCommand()).addTitle("Read files");
     }
 
-    private static Menu createReadOption(){
-        return new Menu("Display files", new ReadCommand());
+    private static Menu createDeleteOption() {
+        return new Menu();
     }
 
-    private static Menu createDeleteOption(){
-        return new Menu("Delete files", new DeleteCommand());
-    }
-
-    private static Menu createSearchOption(){
-        return new Menu("Search file", new SearchCommand());
+    private static Menu createSearchOption() {
+        return new Menu();
     }
 
 }

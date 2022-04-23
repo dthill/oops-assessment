@@ -3,6 +3,7 @@ package menu;
 
 import commands.ExitCommand;
 import commands.MenuCommand;
+import commands.ParentCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,44 +16,41 @@ public class Menu {
     private List<Menu> options;
     private Menu parent;
 
-    public Menu(String header, String title, List<Menu> options){
+    public Menu addHeader(String header) {
         this.header = header;
-        this.title = title;
-        this.parent = null;
-        this.command = null;
-        if (options == null) {
-            this.options = new ArrayList<>();
-        } else {
-            this.options = options;
-        }
-        this.options.add(this.generateExitOption());
+        return this;
     }
 
-    public Menu(String title, MenuCommand command){
-        this.header = null;
+    public Menu addTitle(String title) {
         this.title = title;
-        this.options = new ArrayList<>();
+        return this;
+    }
+
+    public Menu addCommand(MenuCommand command){
         this.command = command;
-        this.parent = parent;
+        return this;
     }
 
-    public Menu(String header, String title, List<Menu> options, Menu parent){
-        this.header = header;
-        this.title = title;
-        this.parent = parent;
-        this.command = null;
-        if (options == null) {
+    public Menu addMenuOption(Menu option){
+        if(this.options == null){
             this.options = new ArrayList<>();
-        } else {
-            this.options = options;
         }
-        if(parent != null){
-            this.options.add(this.generateParentMenuOption());
-        }
-        this.options.add(this.generateExitOption());
+        this.options.add(option);
+        return this;
     }
 
-    private String generateMenu() {
+    public Menu addParent(Menu parent){
+        this.parent = parent;
+        return this.addMenuOption(new Menu().addTitle("parent menu").addCommand(new ParentCommand(this.parent)));
+    }
+
+    public Menu addExitOption() {
+        return this.addMenuOption(
+                new Menu().addTitle("Exit application").addCommand(new ExitCommand())
+        );
+    }
+
+    private String generateMenuText() {
         String result = "";
         if (header != null && header != "") {
             result += header + "\n";
@@ -69,37 +67,29 @@ public class Menu {
     }
 
     private String generateMenuOptionText(int i) {
-        return (i+1) + ". " + options.get(i).title + "\n";
+        return (i + 1) + ". " + options.get(i).title + "\n";
     }
 
     private void printMenu() {
-        System.out.println(this.generateMenu());
+        System.out.println(this.generateMenuText());
     }
 
-    private Menu generateExitOption() {
-        return new Menu("Exit application",  new ExitCommand());
-    }
-
-    private Menu generateParentMenuOption() {
-        return new Menu(parent.header, "Return to " + parent.title, parent.options, parent.parent);
-    }
-
-    private Menu getUserSelectedMenu(){
+    private Menu getUserSelectedMenu() {
         Scanner scanner = new Scanner(System.in);
         int selectedIndex;
-        while(true){
+        while (true) {
             String userInput = scanner.nextLine();
-            try{
-                selectedIndex = Integer.parseInt(userInput, 10) -1;
-                if(selectedIndex > options.size() || selectedIndex < 0){
+            try {
+                selectedIndex = Integer.parseInt(userInput, 10) - 1;
+                if (selectedIndex > options.size() || selectedIndex < 0) {
                     throw new IndexOutOfBoundsException();
                 } else {
                     break;
                 }
-            } catch(IndexOutOfBoundsException e){
-                System.out.println("There is no such option. Please select an option from 1 to "+ options.size());
-            } catch(NumberFormatException e){
-                System.out.println("This is not a valid option. Pleas provide a valid integer from 1 to "+ options.size());
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("There is no such option. Please select an option from 1 to " + options.size());
+            } catch (NumberFormatException e) {
+                System.out.println("This is not a valid option. Pleas provide a valid integer from 1 to " + options.size());
             }
         }
         return options.get(selectedIndex);
@@ -113,4 +103,6 @@ public class Menu {
             this.getUserSelectedMenu().runCommand();
         }
     }
+
+
 }
