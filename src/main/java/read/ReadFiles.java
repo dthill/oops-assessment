@@ -11,7 +11,7 @@ public class ReadFiles {
   }
 
   public File[] getFiles() {
-    return workingDirectory.listFiles();
+    return SortFiles.sortByFileName(workingDirectory.listFiles());
   }
 
 }
