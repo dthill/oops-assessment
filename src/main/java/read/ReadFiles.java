@@ -10,8 +10,8 @@ public class ReadFiles {
     workingDirectory = new File("./");
   }
 
-  public String[] getFiles() {
-    return workingDirectory.list();
+  public File[] getFiles() {
+    return workingDirectory.listFiles();
   }
 
 }
