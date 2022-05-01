@@ -1,5 +1,6 @@
 package menu;
 
+import commands.AddCommand;
 import commands.DeleteCommand;
 import commands.ReadCommand;
 import commands.SearchCommand;
@@ -22,13 +23,23 @@ public class MainMenuFactory {
 
 
   private static Menu createEditAndSearchOptionMenu(Menu parent) {
-    return new Menu().addTitle("Edit and Search Submenu").addMenuOption(createDeleteOption())
-        .addMenuOption(createSearchOption()).addParent(parent).addExitOption();
+    return new Menu()
+        .addTitle("Edit and Search Submenu")
+        .addMenuOption(createAddOption())
+        .addMenuOption(createDeleteOption())
+        .addMenuOption(createSearchOption())
+        .addParent(parent)
+        .addExitOption();
   }
 
   private static Menu createReadOption() {
     return new Menu().addCommand(new ReadCommand()).addTitle("Read files");
   }
+
+  private static Menu createAddOption() {
+    return new Menu().addCommand(new AddCommand()).addTitle("Add file");
+  }
+
 
   private static Menu createDeleteOption() {
     return new Menu().addCommand(new DeleteCommand()).addTitle("Delete File");
