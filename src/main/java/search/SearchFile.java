@@ -35,18 +35,12 @@ public class SearchFile {
   }
 
   private void search() {
-    List<Integer> indexes = new LinkedList<>();
-    for (int index = this.fileText.indexOf(this.searchPattern);
-        index >= 0;
-        index = this.fileText.indexOf(this.searchPattern, index + 1)) {
-      indexes.add(index);
-    }
     System.out.println(
-        "Search pattern found at the following indexes: " + indexes);
+        "Search pattern found at the following indexes: " + this.findPatternUsingHashing());
     System.out.println("++++++++++++++++++++++");
   }
 
-  private List<Integer> findPatternUsing() {
+  private List<Integer> findPatternUsingHashing() {
     List<Integer> result = new LinkedList<>();
     int patternHash = getHashFor(this.searchPattern);
     int textRollingHash = getHashFor(this.fileText.substring(0, searchPattern.length()));
