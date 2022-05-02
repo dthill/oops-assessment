@@ -4,7 +4,7 @@ import java.io.File;
 
 public class ReadFiles {
 
-  private File workingDirectory;
+  private final File workingDirectory;
 
   public ReadFiles() {
     workingDirectory = new File("./");

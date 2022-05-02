@@ -9,10 +9,9 @@ import java.util.Scanner;
 
 public class SearchFile {
 
-  private static final int LARGE_PRIME = 9973;
-  private static final int RADIX = 256;
+  private static final int LARGE_PRIME = 2_147_483_647;
+  private final String searchPattern;
   private String fileText;
-  private String searchPattern;
 
   public SearchFile() {
     Scanner scanner = new Scanner(System.in);
@@ -31,7 +30,6 @@ public class SearchFile {
     System.out.println("Search text");
     this.searchPattern = scanner.nextLine();
     this.search();
-
   }
 
   private void search() {
@@ -42,24 +40,35 @@ public class SearchFile {
 
   private List<Integer> findPatternUsingHashing() {
     List<Integer> result = new LinkedList<>();
-    int patternHash = getHashFor(this.searchPattern);
-    int textRollingHash = getHashFor(this.fileText.substring(0, searchPattern.length()));
-    for (int i = 0; i < fileText.length() - searchPattern.length(); i++) {
+    if (fileText == null || fileText.length() == 0 || searchPattern.length() > fileText.length()) {
+      return result;
+    }
+    long patternHash = getHashFor(this.searchPattern);
+    long textRollingHash = getHashFor(this.fileText.substring(0, searchPattern.length()));
+    int i = 0;
+    do {
       if (patternHash == textRollingHash &&
           fileText.substring(i, i + searchPattern.length()).equalsIgnoreCase(searchPattern)) {
         result.add(i);
       }
-      textRollingHash = getHashFor(fileText.substring(i, i + searchPattern.length()));
-    }
+      if (i < fileText.length() - searchPattern.length()) {
+        textRollingHash = getRollingHashFor(textRollingHash, fileText.charAt(i),
+            fileText.charAt(i + searchPattern.length()));
+      }
+      i++;
+    } while (i < fileText.length() - searchPattern.length());
     return result;
   }
 
-  private int getHashFor(String text) {
-    int hash = 0;
-    for (int i = 0; i < searchPattern.length(); i++) {
-      int polyBase = (int) (Math.pow(RADIX, searchPattern.length() - 1 - i) % LARGE_PRIME);
-      hash = (hash + (polyBase * searchPattern.charAt(i)) % LARGE_PRIME) % LARGE_PRIME;
+  private long getHashFor(String text) {
+    long hash = 0;
+    for (int i = 0; i < text.length(); i++) {
+      hash = (hash + text.charAt(i)) % LARGE_PRIME;
     }
     return hash;
+  }
+
+  private long getRollingHashFor(long currentHash, char toRemove, char toAdd) {
+    return (currentHash - toRemove + toAdd) % LARGE_PRIME;
   }
 }

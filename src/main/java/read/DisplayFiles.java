@@ -10,8 +10,8 @@ public class DisplayFiles {
 
   private static String generateFileList(File[] fileList) {
     String result = "Files in directory:\n";
-    for (int i = 0; i < fileList.length; i++) {
-      result += fileList[i].getName() + "\t-\t" + generateFileSize(fileList[i]) + "\n";
+    for (File file : fileList) {
+      result += file.getName() + "\t-\t" + generateFileSize(file) + "\n";
     }
     result += "++++++++++++++++++++\n";
     return result;
