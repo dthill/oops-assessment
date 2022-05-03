@@ -22,19 +22,19 @@ public class SearchFile {
         this.fileText = Files.readString(Paths.get(fileInput));
         break;
       } catch (OutOfMemoryError e) {
-        System.out.println("The provided file is to big. Try another file.");
+        System.out.println("The selected file is to big. Try another file.");
       } catch (IOException e) {
         System.out.println("An error occurred. Try another file.");
       }
     }
-    System.out.println("Search text");
+    System.out.println("Please enter your search text");
     this.searchPattern = scanner.nextLine();
     this.search();
   }
 
   private void search() {
     System.out.println(
-        "Search pattern found at the following indexes: " + this.findPatternUsingHashing());
+        "Search text found at the following indexes: " + this.findPatternUsingHashing());
     System.out.println("++++++++++++++++++++++");
   }
 

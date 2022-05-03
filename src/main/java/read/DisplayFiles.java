@@ -4,11 +4,11 @@ import java.io.File;
 
 public class DisplayFiles {
 
-  public static void displayFiles(File[] fileList) {
+  public DisplayFiles(File[] fileList) {
     System.out.println(generateFileList(fileList));
   }
 
-  private static String generateFileList(File[] fileList) {
+  private String generateFileList(File[] fileList) {
     String result = "Files in directory:\n";
     for (File file : fileList) {
       result += file.getName() + "\t-\t" + generateFileSize(file) + "\n";
@@ -17,7 +17,7 @@ public class DisplayFiles {
     return result;
   }
 
-  private static String generateFileSize(File file) {
+  private String generateFileSize(File file) {
     return String.format("%.1f MB", file.length() / 1024.0);
   }
 }

@@ -1,9 +1,11 @@
 package commands;
 
-public class ExitCommand implements MenuCommand{
-    @Override
-    public void execute() {
-        System.out.println("\nExiting the application");
-        System.exit(0);
-    }
+import exit.Exit;
+
+public class ExitCommand implements MenuCommand {
+
+  @Override
+  public void execute() {
+    new Exit();
+  }
 }

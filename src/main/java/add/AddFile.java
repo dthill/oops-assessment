@@ -25,7 +25,7 @@ public class AddFile {
         System.out.println("This file already exists.");
       } catch (IOException e) {
         System.out.println(
-            "An error occured please try a different filename and make sure you have enough disk space and access rights to create files.");
+            "An error occurred please try a different filename and make sure you have enough disk space and access rights to create files.");
       }
     }
 

@@ -24,7 +24,7 @@ public class DeleteFile {
       System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++");
     } catch (IOException e) {
       System.out.println(
-          "An error occurred please try again make sure you have enough access rights.");
+          "An error occurred please try again and make sure you have enough access rights.");
       System.out.println(
           "+++++++++++++++++++++++++");
     }

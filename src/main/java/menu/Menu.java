@@ -43,7 +43,7 @@ public class Menu {
     this.parent = parent;
     return this.addMenuOption(
         new Menu()
-            .addTitle("parent menu")
+            .addTitle("Parent menu")
             .addCommand(new ParentCommand(this.parent)));
   }
 
